@@ -1,3 +1,3 @@
-## First Week (3.4.-6.4.2018)
+## First Week (02/04/2018 - 06/04/2018)
 
 - Getting started with GitHub.
