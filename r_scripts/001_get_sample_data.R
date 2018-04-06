@@ -6,11 +6,37 @@
 ## LOAD required packages
 require(dplyr)
 
+# ------ Create data frame from pilot subjects -------------------------
 
-# ------ 1) READ in / write data to .RData / .csv and vice versa -------
+# ## NOT RUN
+# dat_1 <- read.table('/Volumes/TOSHIBA/JOSE/EXPERIMENTS/RavenClaw/Ravenclaw/Log_Files/103rawdata.txt',
+#                     sep = ',')
+# dat_2 <- read.table('/Volumes/TOSHIBA/JOSE/EXPERIMENTS/RavenClaw/Ravenclaw/Log_Files/104rawdata.txt',
+#                     sep = ',')
+# dat_3 <- read.table('/Volumes/TOSHIBA/JOSE/EXPERIMENTS/RavenClaw/Ravenclaw/Log_Files/106rawdata.txt',
+#                     sep = ',')
+#
+# data <- rbind(dat_1, dat_2, dat_3)
+# rm(dat_1, dat_2, dat_3)
+# 
+# data <- select(data, V2, V4, V6, V8, V10, V12)
+# names(data) <- c('block', 'trial_nr', 'deck', 'card', 'rt', 'payoff')
 
-## load .RData image
-load('./Desktop/sdata_igt.RData')
+# ## FILTER  only block 1
+# sample_data <- filter(data, block == 1)
+# rm(data)
+
+# ## Clean up the data set
+# sample_data <- sample_data[-41, ]
+# sample_data$deck <- as.factor(sample_data$deck)
+
+# ------ Save data frame -----------------------------------------------
+# ## NOT RUN
+# write.table(sample_data, '~/Desktop/sdata_igt.txt', sep = '\t')
+# save.image("~/Desktop/sdata_igt.RData")
+
+# ------ 1) READ in the data ----------------------------------------
+load('./Documents/GitHub/MSc_Thesis/sample_data/sdata_igt.RData')
 
 
 # ------ 2) ADD gain & loss columns ------------------------------------
@@ -112,6 +138,12 @@ for (i in 1:nrow(sample_data)) {
 rm(i)
 
 
-# ------ 2) RENAME new columns -----------------------------------------
+# ------ 3) RENAME and ADD columns for model ------------------------
 names(sample_data)[7:8] <- c('gain', 'loss')
 
+## Reorder the decks to match original IGT
+sample_data$choice <- plyr::revalue(sample_data$deck, c('1' = 'A', '2' = 'D', '3' = 'C', '4' = 'B'))
+
+## ADD Subject ID
+sample_data$subjID <- c(rep(1, 99), rep(2:3, each = 100))
+write.table(sample_data, './Documents/GitHub/MSc_Thesis/sample_data/sdata_igt.txt', sep = '\t')
