@@ -12,4 +12,10 @@
   
 ## Third Week (16/04/2018 - 20/04/2018)
 
-- Starting to collect data from subjects
+- Starting to collect data from subjects 
+ - n = 4
+ 
+ ## Fourth Week (23/04/2018 - 27/04/2018)
+ 
+ - Collecting more data 
+  - n = 10
